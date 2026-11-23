@@ -82,25 +82,24 @@ void Draw(void) {
 
 
 void Update(void) {
-	int PressKey = GetInputKey();
 
-	if (PressKey == DF_KEY_ESC) {
+	InputUpdate();
+
+	if (IsKeyPressed(VK_ESCAPE)) {
 		g_IsRunning = false;
 		return;
 	}
 
 	ULONGLONG Now = GetTickCount64();
+	DeltaTime(Now);
 
-	PlayerUpdate(PressKey, Now);
+	PlayerUpdate(Now);
 	BulletUpdate(Now);
 	EnemyUpdate(Now);
 	FPSUpdate(Now);
 
-	// =========================================================
-	// TODO: 충돌 판정
 	HitEnemy();
 	HitPlayer();
-	// =========================================================
 	return;
 }
 

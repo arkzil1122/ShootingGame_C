@@ -47,13 +47,16 @@ void SetFPS(int _FPS) {
 void AddFrameCount(ULONGLONG _now)
 {
     ++FPSCount;
-    DeltaTime(_now);
 }
 
 
 float GetDeltaTime()
 {
-    return DeltaTick * 0.001f;
+    ULONGLONG Tick = DeltaTick;
+    if (Tick > DF_MAX_DELTA_MS) {
+        Tick = DF_MAX_DELTA_MS;
+    }
+    return Tick * 0.001f;
 }
 
 void DeltaTime(ULONGLONG _now)

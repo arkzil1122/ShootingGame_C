@@ -1,10 +1,12 @@
-﻿#include <conio.h>
-#include "Player.h"
+﻿#include "Player.h"
 #include "Global.h"
 #include "Background.h"
 #include "Bullet.h"
 #include "Collide.h"
+#include "Input.h"        // [추가] IsKeyDown
+#include "TimeManager.h"  // [추가] GetDeltaTime
 
+static void PlayerMove();
 static void PlayerFire(ULONGLONG _Now);
 
 void PlayerInit() {
@@ -16,38 +18,36 @@ void PlayerInit() {
 }
 
 
-void PlayerUpdate(int _PressKey, ULONGLONG _Now) {
-	
-	const int MaxX = DF_MAP_SIZEX - 1 - DF_PLAYER_SIZEX;
-	const int MaxY = DF_MAP_SIZEY - 1 - DF_PLAYER_SIZEY;
-	
-	switch (_PressKey) {
-	case DF_KEY_LEFT:
-		if (g_Player.pos.X > 1) {
-			g_Player.pos.X--;
-		}
-		break;
-	case DF_KEY_RIGHT:
-		if (g_Player.pos.X < MaxX) {
-			g_Player.pos.X++;
-		}
-		break;
-	case DF_KEY_UP:
-		if (g_Player.pos.Y > 1) {
-			g_Player.pos.Y--;
-		}
-		break;
-	case DF_KEY_DOWN:
-		if (g_Player.pos.Y < MaxY) {
-			g_Player.pos.Y++;
-		}
-		break;
-	case DF_KEY_SPACE:
-		PlayerFire(_Now);
-		break;
-	default:
-		break;
+void PlayerUpdate(ULONGLONG _Now) {
+	PlayerMove();
+	PlayerFire(_Now);
+}
+
+
+static void PlayerMove() {
+	Vector Dir = { 0.f, 0.f };
+
+	if (IsKeyDown(VK_LEFT))  { Dir.X -= 1.f; }
+	if (IsKeyDown(VK_RIGHT)) { Dir.X += 1.f; }
+	if (IsKeyDown(VK_UP))    { Dir.Y -= 1.f; }
+	if (IsKeyDown(VK_DOWN))  { Dir.Y += 1.f; }
+
+	if (Dir.X != 0.f && Dir.Y != 0.f) {
+		Dir.X *= DF_DIAGONAL_SCALE;
+		Dir.Y *= DF_DIAGONAL_SCALE;
 	}
+
+	float DeltaTime = GetDeltaTime();
+	g_Player.pos.X += Dir.X * DF_PLAYER_VELOCITY * DeltaTime;
+	g_Player.pos.Y += Dir.Y * DF_PLAYER_VELOCITY * DeltaTime;
+
+	const float MaxX = (float)(DF_MAP_SIZEX - 1 - DF_PLAYER_SIZEX);
+	const float MaxY = (float)(DF_MAP_SIZEY - 1 - DF_PLAYER_SIZEY);
+
+	if (g_Player.pos.X < 1.f)  { g_Player.pos.X = 1.f; }
+	if (g_Player.pos.X > MaxX) { g_Player.pos.X = MaxX; }
+	if (g_Player.pos.Y < 1.f)  { g_Player.pos.Y = 1.f; }
+	if (g_Player.pos.Y > MaxY) { g_Player.pos.Y = MaxY; }
 }
 
 void PlayerDraw(Tile(*_BG)[DF_BG_SIZEX]) {
@@ -66,6 +66,10 @@ void PlayerDraw(Tile(*_BG)[DF_BG_SIZEX]) {
 
 
 static void PlayerFire(ULONGLONG _Now) {
+	if (!IsKeyDown(VK_SPACE)) {
+		return;
+	}
+
 	if (_Now - g_Player.LastFireTime < DF_PLAYER_FIRE_DELAY) {
 		return;
 	}

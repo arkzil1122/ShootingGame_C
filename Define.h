@@ -19,19 +19,14 @@
 #define DF_ENEMY_SPAWN_DELAY 800
 
 // 속도 (1초에 몇칸)
-#define DF_PLAYER_VELOCITY 1
+#define DF_PLAYER_VELOCITY 20
 #define DF_ENEMY_VELOCITY 1
 #define DF_BULLET_VELOCITY 50
 
 
-// 키보드 입력
-#define DF_KEY_NONE   -1      // 입력 없음
-#define DF_KEY_SPACE  ' '     // 32
-#define DF_KEY_ESC    27
-#define DF_KEY_UP     1072
-#define DF_KEY_LEFT   1075
-#define DF_KEY_RIGHT  1077
-#define DF_KEY_DOWN   1080
+
+#define DF_MAX_DELTA_MS   100       // 한 프레임 delta time 상한 (ms)
+#define DF_DIAGONAL_SCALE 0.7f   // 대각선 이동 속도 보정
 
 
 // ----- 모양 -----
@@ -108,4 +103,3 @@ enum COLOR {
 #define DF_DIRECTION_RIGHT					{ 1, 0 }
 #define DF_DIRECTION_RIGHT_DOWN		{ 1, 1 * DF_ANGLE }
 #define DF_DIRECTION_RIGHT_UP			{ 1, -1 * DF_ANGLE }	
-

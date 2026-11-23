@@ -1,33 +1,29 @@
 ﻿#include "Input.h"
-#include "Define.h"
-#include <conio.h>
+#include <Windows.h>
 
-int GetInputKey() {
+#define DF_KEY_COUNT 256    // 가상 키 코드는 0~255
 
-	if (!_kbhit()) {
-		return DF_KEY_NONE;
+static bool g_CurrKey[DF_KEY_COUNT] = {};   // 이번 프레임 상태
+static bool g_PrevKey[DF_KEY_COUNT] = {};   // 지난 프레임 상태
+
+void InputUpdate() {
+	for (int i = 0; i < DF_KEY_COUNT; ++i) {
+		g_PrevKey[i] = g_CurrKey[i];
+		g_CurrKey[i] = (GetAsyncKeyState(i) & 0x8000) != 0;
 	}
-	
-	// TODO 동시입력이 가능하게 입력 방식 변경
-	// getch() -> getasynckeystate();
+}
 
-	int PressKey = _getch();
-
-	// 방향키는 _getch()로 읽으면 숫자가 2개 연달아 들어온다.
-	//   첫 번째: 224 (방향키라는 표시)
-	//   두 번째: 72(위) 75(왼쪽) 77(오른쪽) 80(아래)
-	// 그래서 224가 오면 한 번 더 읽어서 진짜 방향을 알아낸다.
-	if (PressKey == 224 || PressKey == 0) {
-		int ArrowKey = _getch();
-
-		switch (ArrowKey) {
-		case 72: return DF_KEY_UP;
-		case 75: return DF_KEY_LEFT;
-		case 77: return DF_KEY_RIGHT;
-		case 80: return DF_KEY_DOWN;
-		default: return DF_KEY_NONE;
-		}
+bool IsKeyDown(int _VirtualKey) {
+	if (_VirtualKey < 0 || _VirtualKey >= DF_KEY_COUNT) {
+		return false;
 	}
+	return g_CurrKey[_VirtualKey];
+}
 
-	return PressKey;
+// 방금 눌림 검사
+bool IsKeyPressed(int _VirtualKey) {
+	if (_VirtualKey < 0 || _VirtualKey >= DF_KEY_COUNT) {
+		return false;
+	}
+	return g_CurrKey[_VirtualKey] && !g_PrevKey[_VirtualKey];
 }
