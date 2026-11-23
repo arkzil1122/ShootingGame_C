@@ -43,7 +43,7 @@
 #define DF_ENEMY_TEXT_2 '-'
 
 #define DF_ENEMY_HITBOX_X 0.5
-#define DF_ENEMY_HITBOX_Y 1
+#define DF_ENEMY_HITBOX_Y 0.8
 
 
 enum ENEMY_TEXT {
@@ -99,7 +99,7 @@ enum COLOR {
 
 
 
-// 발사 시 우상단이 우하단보다 1칸 더 많이 가는 현상 발생
+// TODO 발사 시 우상단이 우하단보다 1칸 더 많이 가는 현상 발생
 
 #define DF_ANGLE 0.2 // 각도 보정
 #define DF_DIRECTION_LEFT					{ -1, 0 }	

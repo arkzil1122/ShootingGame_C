@@ -7,6 +7,9 @@ int GetInputKey() {
 	if (!_kbhit()) {
 		return DF_KEY_NONE;
 	}
+	
+	// TODO 동시입력이 가능하게 입력 방식 변경
+	// getch() -> getasynckeystate();
 
 	int PressKey = _getch();
 
