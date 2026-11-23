@@ -29,14 +29,6 @@ void EnemyDraw(Tile(*_BG)[DF_BG_SIZEX]) {
 			continue;
 		}
 
-		// Draw 단계에서 text 변경해보기
-		// 1move -> 1 change가 불가능해지네.
-		//if (g_Enemies[i].Design == DF_ENEMY_TEXT) {
-		//	g_Enemies[i].Design = DF_ENEMY_TEXT_2;
-		//}
-		//else {
-		//	g_Enemies[i].Design = DF_ENEMY_TEXT;
-		//}
 		BGSetTile(_BG, (int)g_Enemies[i].pos.X, (int)g_Enemies[i].pos.Y, Enemy_text[g_Enemies[i].Design], COLOR_LIGHT_RED);
 	}
 }
@@ -77,22 +69,12 @@ static void EnemyMove(ULONGLONG _Now) {
 			continue;
 		}
 
-		// Move 단계에서 Design 변경
-		// 첫 단계에서는 됨. 이후 움직임에서는 발생X
-		// ㅄ.
 
 		int Next = pEnemy->Design + 1;
 		if (Next >= ENEMY_TEXT_COUNT) {
 			Next = 0;
 		}
 		pEnemy->Design = (ENEMY_TEXT) Next;
-		//
-		//if (pEnemy->Design == DF_ENEMY_TEXT) {
-		//	pEnemy->Design = DF_ENEMY_TEXT_2;
-		//}
-		//else {
-		//	pEnemy->Design = DF_ENEMY_TEXT;
-		//}
 
 		--pEnemy->pos.X;
 

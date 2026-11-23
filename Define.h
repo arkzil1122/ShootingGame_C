@@ -109,11 +109,3 @@ enum COLOR {
 #define DF_DIRECTION_RIGHT_DOWN		{ 1, 1 * DF_ANGLE }
 #define DF_DIRECTION_RIGHT_UP			{ 1, -1 * DF_ANGLE }	
 
-
-// 바보짓. COORD는 { x, y } 순서.
-//#define DF_DIRECTION_LEFT					{ 0, -1 }	
-//#define DF_DIRECTION_LEFT_DOWN		{ 1, -1 }
-//#define DF_DIRECTION_LEFT_UP				{ -1, -1 }
-//#define DF_DIRECTION_RIGHT					{ 0, 1 }
-//#define DF_DIRECTION_RIGHT_DOWN		{ 1, 1 }
-//#define DF_DIRECTION_RIGHT_UP			{ -1, 1 }	
