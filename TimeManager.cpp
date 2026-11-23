@@ -1,9 +1,9 @@
-#include "TimeManager.h"
+ï»¿#include "TimeManager.h"
 #include "Global.h"
 
 #include <Windows.h>
 
-// °ÔÀÓ ½ÃÀÛ ½Ã°£
+// ê²Œìž„ ì‹œìž‘ ì‹œê°„
 static ULONGLONG StartTick = GetTickCount64();
 
 int FPS = 0;
@@ -13,14 +13,14 @@ int PlayTime = 0;
 static ULONGLONG DeltaTick = StartTick;
 static ULONGLONG PreTick = StartTick;
 
-// FPS ÃøÁ¤±â
+// FPS ì¸¡ì •ê¸°
 void FPSUpdate(ULONGLONG _now)
 {
-    // ¸Å ¼ø°£ ÇÁ·¹ÀÓ °è»êÀ» ÇÑ´Ù.
+    // ë§¤ ìˆœê°„ í”„ë ˆìž„ ê³„ì‚°ì„ í•œë‹¤.
     AddFrameCount(_now);
     g_Timer += GetDeltaTime();
 
-    // 1ÃÊ¿¡ ÇÑ¹ø¾¿ playtimeÀ» Ãß°¡ÇÑ´Ù.
+    // 1ì´ˆì— í•œë²ˆì”© playtimeì„ ì¶”ê°€í•œë‹¤.
     if (_now - StartTick >= 1000) {
         SetFPS(CalcFPS());
         StartTick = _now;
