@@ -29,7 +29,7 @@
 #define DF_DIAGONAL_SCALE 0.7f   // 대각선 이동 속도 보정
 
 
-// ----- 모양 -----
+// 모양
 #define DF_WALL_TEXT   '#'
 
 #define DF_BULLET_TEXT '-'
@@ -37,27 +37,15 @@
 #define DF_ENEMY_TEXT  '<'
 #define DF_ENEMY_TEXT_2 '-'
 
-#define DF_ENEMY_HITBOX_X 0.5
-#define DF_ENEMY_HITBOX_Y 0.8
-
-
 enum ENEMY_TEXT {
 	ENEMY_TEXT_1,
 	ENEMY_TEXT_2,
 	ENEMY_TEXT_COUNT
 };
-
 const char Enemy_text[ENEMY_TEXT_COUNT] = { '<', '-'};
 
-
-// ----- 플레이어 모양 (여러 칸) -----
-// g_Player.X, Y = 이 모양의 "왼쪽 위" 칸 위치.
-// 공백(' ')은 투명 칸 = 그리지 않고, 플레이어 몸도 아님.
-//
-//   \          (0,0)
-//   =>         (0,1) (1,1)
-//   /          (0,2)
-
+//플레이어 모양
+// 시작점(g_player.pos.X, Y)는 좌상단 0,0 기준
 #define DF_PLAYER_SIZEX 2
 #define DF_PLAYER_SIZEY 3
 
@@ -66,7 +54,6 @@ const char* const DF_PLAYER_SHAPE[DF_PLAYER_SIZEY] = {
 	"=>",
 	"/ ",
 };
-
 
 #define DF_PLAYER_GUN_X 2
 #define DF_PLAYER_GUN_Y 1
@@ -92,8 +79,7 @@ enum COLOR {
 };
 
 
-
-
+// 방향
 #define DF_ANGLE 0.2 // 각도 보정
 #define DF_DIRECTION_LEFT					{ -1, 0 }	
 #define DF_DIRECTION_LEFT_DOWN		{ -1, 1 * DF_ANGLE }
@@ -101,3 +87,7 @@ enum COLOR {
 #define DF_DIRECTION_RIGHT					{ 1, 0 }
 #define DF_DIRECTION_RIGHT_DOWN		{ 1, 1 * DF_ANGLE }
 #define DF_DIRECTION_RIGHT_UP			{ 1, -1 * DF_ANGLE }	
+
+// 적 히트박스
+#define DF_ENEMY_HITBOX_X 0.5
+#define DF_ENEMY_HITBOX_Y 0.8
