@@ -1,27 +1,35 @@
-#include "Collide.h"
+﻿#include "Collide.h"
 #include <Windows.h>
 
 bool isHit(Bullet* _bullet, Enemy* _enemy)
 {
-	if (_bullet->pos.X >= _enemy->pos.X - DF_ENEMY_HITBOX_X &&
-		_bullet->pos.X <= _enemy->pos.X + DF_ENEMY_HITBOX_X &&
-		_bullet->pos.Y >= _enemy->pos.Y - DF_ENEMY_HITBOX_Y &&
-		_bullet->pos.Y <= _enemy->pos.Y + DF_ENEMY_HITBOX_Y
-		) {
-		return true;
-	}
-	return false;
+	const float EnemyLeft = _enemy->pos.X - DF_ENEMY_HITBOX_X;
+	const float EnemyRight = _enemy->pos.X + DF_ENEMY_HITBOX_X;
+	const float EnemyTop = _enemy->pos.Y - DF_ENEMY_HITBOX_Y;
+	const float EnemyBottom = _enemy->pos.Y + DF_ENEMY_HITBOX_Y;
+
+	return isOverLap(_bullet->pos.X, _bullet->pos.X, EnemyLeft, EnemyRight)
+		&& isOverLap(_bullet->pos.Y, _bullet->pos.Y, EnemyTop, EnemyBottom);
 }
 
 bool isCollide(Player* _player, Enemy* _enemy)
 {
-	if (_enemy->pos.X >= _player->pos.X &&
-		_enemy->pos.X <= _player->pos.X + DF_PLAYER_SIZEX &&
-		_enemy->pos.Y >= _player->pos.Y &&
-		_enemy->pos.Y <= _player->pos.Y + DF_PLAYER_SIZEY) {
-		return true;
-	}
-	return false;
+	// player의 시작점은 가운데가 아님.
+	const float OffsetX = (DF_PLAYER_SIZEX - DF_PLAYER_HITBOX_X) * 0.5f;
+	const float OffsetY = (DF_PLAYER_SIZEY - DF_PLAYER_HITBOX_Y) * 0.5f;
+
+	const float PlayerLeft = _player->pos.X - 0.5f + OffsetX;
+	const float PlayerRight = PlayerLeft + DF_PLAYER_HITBOX_X;
+	const float PlayerTop = _player->pos.Y - 0.5f + OffsetY;
+	const float PlayerBottom = PlayerTop + DF_PLAYER_HITBOX_Y;
+	
+	const float EnemyLeft = _enemy->pos.X - DF_ENEMY_HITBOX_X;
+	const float EnemyRight = _enemy->pos.X + DF_ENEMY_HITBOX_X;
+	const float EnemyTop = _enemy->pos.Y - DF_ENEMY_HITBOX_Y;
+	const float EnemyBottom = _enemy->pos.Y + DF_ENEMY_HITBOX_Y;
+
+	return isOverLap(EnemyLeft, EnemyRight, PlayerLeft, PlayerRight) &&
+		isOverLap(EnemyTop, EnemyBottom, PlayerTop, PlayerBottom);
 }
 
 void HitEnemy() {
@@ -59,4 +67,8 @@ void HitPlayer() {
 			}
 		}
 	}
+}
+
+bool isOverLap(float _ALeft, float _ARight, float _BLeft, float _BRight) {
+	return (_ALeft <= _BRight && _ARight >= _BLeft);
 }

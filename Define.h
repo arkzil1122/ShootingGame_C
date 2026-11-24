@@ -88,6 +88,9 @@ enum COLOR {
 #define DF_DIRECTION_RIGHT_DOWN		{ 1, 1 * DF_ANGLE }
 #define DF_DIRECTION_RIGHT_UP			{ 1, -1 * DF_ANGLE }	
 
-// 적 히트박스
+// 히트박스
+
+#define DF_PLAYER_HITBOX_X 1.5
+#define DF_PLAYER_HITBOX_Y 2.5
 #define DF_ENEMY_HITBOX_X 0.5
 #define DF_ENEMY_HITBOX_Y 0.8
