@@ -94,7 +94,7 @@ void Update(void) {
 	DeltaTime(Now);
 
 	PlayerUpdate(Now);
-	BulletUpdate(Now);
+	BulletUpdate();
 	EnemyUpdate(Now);
 	FPSUpdate(Now);
 

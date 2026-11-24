@@ -24,13 +24,12 @@ void BulletFire(int _X, int _Y, ULONGLONG _Now, Vector _dir) {
 		g_Bullets[i].pos.X = _X;
 		g_Bullets[i].pos.Y = _Y;
 		g_Bullets[i].IsActive = true;
-		g_Bullets[i].LastMoveTime = _Now;
 		SetBulletDirection(DF_BULLET_VELOCITY, _dir, &g_Bullets[i]);
 		return;
 	}
 }
 
-void BulletUpdate(ULONGLONG _Now) {
+void BulletUpdate() {
 	for (int i = 0; i < DF_MAX_BULLET; ++i) {
 		Bullet* pBullet = &g_Bullets[i];
 
@@ -40,8 +39,6 @@ void BulletUpdate(ULONGLONG _Now) {
 
 		pBullet->pos.X += pBullet->dir.X * GetDeltaTime();
 		pBullet->pos.Y += pBullet->dir.Y * GetDeltaTime();
-
-		pBullet->LastMoveTime = _Now;
 
 		if (FloatToInt(pBullet->pos.X) >= DF_MAP_SIZEX - 2) {
 			pBullet->IsActive = false;
