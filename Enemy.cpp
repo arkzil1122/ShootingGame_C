@@ -3,12 +3,12 @@
 #include "Global.h"
 #include "Background.h"
 #include "Collide.h"
-
+#include "TimeManager.h"
 
 static ULONGLONG g_LastSpawnTime = 0;
 
 static void EnemySpawn(ULONGLONG _Now);
-static void EnemyMove(ULONGLONG _Now);
+static void EnemyMove();
 
 void EnemyInit() {
 	for (int i = 0; i < DF_MAX_ENEMY; ++i) {
@@ -20,7 +20,7 @@ void EnemyInit() {
 
 void EnemyUpdate(ULONGLONG _Now) {
 	EnemySpawn(_Now);
-	EnemyMove(_Now);
+	EnemyMove();
 }
 
 void EnemyDraw(Tile(*_BG)[DF_BG_SIZEX]) {
@@ -46,7 +46,6 @@ static void EnemySpawn(ULONGLONG _Now) {
 		g_Enemies[i].pos.X = DF_MAP_SIZEX - 2;
 		g_Enemies[i].pos.Y = rand() % (DF_MAP_SIZEY - 4) + 2;
 		g_Enemies[i].IsActive = true;
-		g_Enemies[i].LastMoveTime = _Now;
 		g_Enemies[i].Design = ENEMY_TEXT_1;
 
 		// TODO 적이 random한 간격으로 bullet 발사 구현
@@ -57,7 +56,7 @@ static void EnemySpawn(ULONGLONG _Now) {
 	g_LastSpawnTime = _Now;
 }
 
-static void EnemyMove(ULONGLONG _Now) {
+static void EnemyMove() {
 	for (int i = 0; i < DF_MAX_ENEMY; ++i) {
 		Enemy* pEnemy = &g_Enemies[i];
 
@@ -65,21 +64,16 @@ static void EnemyMove(ULONGLONG _Now) {
 			continue;
 		}
 
-		if (_Now - pEnemy->LastMoveTime < DF_ENEMY_MOVE_DELAY) {
-			continue;
-		}
-
-
+		// 적 애니메이션
 		int Next = pEnemy->Design + 1;
 		if (Next >= ENEMY_TEXT_COUNT) {
 			Next = 0;
 		}
 		pEnemy->Design = (ENEMY_TEXT) Next;
 
-		--pEnemy->pos.X;
-
-
-		pEnemy->LastMoveTime = _Now;
+		// 적 이동
+		pEnemy->pos.X += pEnemy->dir.X * 
+			DF_ENEMY_VELOCITY * GetDeltaTime();
 
 		if (pEnemy->pos.X < 1) {
 			pEnemy->IsActive = false;

@@ -20,7 +20,7 @@
 
 // 속도 (1초에 몇칸)
 #define DF_PLAYER_VELOCITY 20
-#define DF_ENEMY_VELOCITY 1
+#define DF_ENEMY_VELOCITY 10
 #define DF_BULLET_VELOCITY 50
 
 

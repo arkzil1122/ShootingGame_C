@@ -32,7 +32,7 @@ struct Bullet {
 
 struct Enemy {
 	Vector pos;
+	Vector dir = DF_DIRECTION_LEFT;
 	bool IsActive;
 	ENEMY_TEXT Design;
-	ULONGLONG LastMoveTime;
 };
