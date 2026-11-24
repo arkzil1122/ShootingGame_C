@@ -13,3 +13,7 @@ float g_Timer = 0;
 Vector GetDirection(float _velocity, Vector _dir) {
 	return { _dir.X * _velocity , _dir.Y * _velocity };
 }
+
+int FloatToInt(float _value) {
+	return (int)(_value + 0.5f);
+}

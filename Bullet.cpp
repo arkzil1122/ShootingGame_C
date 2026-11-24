@@ -21,8 +21,8 @@ void BulletFire(int _X, int _Y, ULONGLONG _Now, Vector _dir) {
 			continue;
 		}
 
-		g_Bullets[i].pos.X = (int)_X;
-		g_Bullets[i].pos.Y = (int)_Y;
+		g_Bullets[i].pos.X = _X;
+		g_Bullets[i].pos.Y = _Y;
 		g_Bullets[i].IsActive = true;
 		g_Bullets[i].LastMoveTime = _Now;
 		SetBulletDirection(DF_BULLET_VELOCITY, _dir, &g_Bullets[i]);
@@ -43,10 +43,10 @@ void BulletUpdate(ULONGLONG _Now) {
 
 		pBullet->LastMoveTime = _Now;
 
-		if (pBullet->pos.X >= DF_MAP_SIZEX - 2) {
+		if (FloatToInt(pBullet->pos.X) >= DF_MAP_SIZEX - 2) {
 			pBullet->IsActive = false;
 		}
-		if (pBullet->pos.Y > DF_MAP_SIZEY - 1 || pBullet->pos.Y < 1) {
+		if (FloatToInt(pBullet->pos.Y) > DF_MAP_SIZEY - 2 || FloatToInt(pBullet->pos.Y) < 1) {
 			pBullet->IsActive = false;
 		}
 	}
@@ -58,7 +58,7 @@ void BulletDraw(Tile(*_BG)[DF_BG_SIZEX]) {
 			continue;
 		}
 
-		BGSetTile(_BG, (int)g_Bullets[i].pos.X, (int)g_Bullets[i].pos.Y, DF_BULLET_TEXT, COLOR_LIGHT_YELLOW);
+		BGSetTile(_BG, FloatToInt(g_Bullets[i].pos.X), FloatToInt(g_Bullets[i].pos.Y), DF_BULLET_TEXT, COLOR_LIGHT_YELLOW);
 	}
 }
 

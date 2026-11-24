@@ -4,6 +4,7 @@
 #include "Define.h"
 
 Vector GetDirection(float _velocity, Vector _dir);
+int FloatToInt(float _value);
 
 extern Player g_Player;
 extern Bullet g_Bullets[DF_MAX_BULLET];

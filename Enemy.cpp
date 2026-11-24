@@ -29,7 +29,7 @@ void EnemyDraw(Tile(*_BG)[DF_BG_SIZEX]) {
 			continue;
 		}
 
-		BGSetTile(_BG, (int)g_Enemies[i].pos.X, (int)g_Enemies[i].pos.Y, Enemy_text[g_Enemies[i].Design], COLOR_LIGHT_RED);
+		BGSetTile(_BG, FloatToInt(g_Enemies[i].pos.X), FloatToInt(g_Enemies[i].pos.Y), Enemy_text[g_Enemies[i].Design], COLOR_LIGHT_RED);
 	}
 }
 

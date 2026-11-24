@@ -59,7 +59,7 @@ void PlayerDraw(Tile(*_BG)[DF_BG_SIZEX]) {
 				continue;
 			}
 
-			BGSetTile(_BG, (int)g_Player.pos.X + x, (int)g_Player.pos.Y + y, Text, g_Player.Color);
+			BGSetTile(_BG, FloatToInt(g_Player.pos.X + x), FloatToInt(g_Player.pos.Y + y), Text, g_Player.Color);
 		}
 	}
 }
@@ -75,9 +75,9 @@ static void PlayerFire(ULONGLONG _Now) {
 	}
 
 	// 총구에서 발사
-	BulletFire((int)g_Player.pos.X + DF_PLAYER_GUN_X, (int)g_Player.pos.Y + DF_PLAYER_GUN_Y, _Now, DF_DIRECTION_RIGHT);
-	BulletFire((int)g_Player.pos.X + DF_PLAYER_GUN_X, (int)g_Player.pos.Y + DF_PLAYER_GUN_Y, _Now, DF_DIRECTION_RIGHT_UP);
-	BulletFire((int)g_Player.pos.X + DF_PLAYER_GUN_X, (int)g_Player.pos.Y + DF_PLAYER_GUN_Y, _Now, DF_DIRECTION_RIGHT_DOWN);
+	BulletFire(FloatToInt(g_Player.pos.X + DF_PLAYER_GUN_X), FloatToInt(g_Player.pos.Y + DF_PLAYER_GUN_Y), _Now, DF_DIRECTION_RIGHT);
+	BulletFire(FloatToInt(g_Player.pos.X + DF_PLAYER_GUN_X), FloatToInt(g_Player.pos.Y + DF_PLAYER_GUN_Y), _Now, DF_DIRECTION_RIGHT_UP);
+	BulletFire(FloatToInt(g_Player.pos.X + DF_PLAYER_GUN_X), FloatToInt(g_Player.pos.Y + DF_PLAYER_GUN_Y), _Now, DF_DIRECTION_RIGHT_DOWN);
 	
 	g_Player.LastFireTime = _Now;
 }
